@@ -102,7 +102,7 @@ button:hover {
 }
 
 .chart-container canvas {
-    min-height: 300px;
+        min-height: 300px;
     max-width: 100%;
 }
 
@@ -193,7 +193,10 @@ button:hover {
     }
 
     .chart-container canvas {
-        min-height: 220px;
+        /* Make charts taller on mobile for better visibility */
+        min-height: 380px;
+        width: 100% !important;
+        height: 42vh; /* allows charts to scale with viewport height */
     }
 
     .cards-container {

@@ -20,20 +20,27 @@ const graficoGramas = new Chart(ctxGramas, {
                 label: 'Marte',
                 data: [],
                 borderColor: '#8f6cbb',
-                backgroundColor: 'rgba(143, 108, 187, 0.1)',
-                tension: 0.1
+                backgroundColor: 'rgba(143, 108, 187, 0.12)',
+                tension: 0.1,
+                borderWidth: 2.8,
+                pointRadius: 4,
+                pointHoverRadius: 6
             },
             {
                 label: 'Vênus',
                 data: [],
                 borderColor: '#FF9FB2',
-                backgroundColor: 'rgba(255, 159, 178, 0.1)',
-                tension: 0.1
+                backgroundColor: 'rgba(255, 159, 178, 0.12)',
+                tension: 0.1,
+                borderWidth: 2.8,
+                pointRadius: 4,
+                pointHoverRadius: 6
             }
         ]
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             title: {
                 display: true,
@@ -69,20 +76,27 @@ const graficoCalorias = new Chart(ctxCalorias, {
                 label: 'Marte',
                 data: [],
                 borderColor: '#8f6cbb',
-                backgroundColor: 'rgba(143, 108, 187, 0.1)',
-                tension: 0.1
+                backgroundColor: 'rgba(143, 108, 187, 0.12)',
+                tension: 0.1,
+                borderWidth: 2.8,
+                pointRadius: 4,
+                pointHoverRadius: 6
             },
             {
                 label: 'Vênus',
                 data: [],
                 borderColor: '#FF9FB2',
-                backgroundColor: 'rgba(255, 159, 178, 0.1)',
-                tension: 0.1
+                backgroundColor: 'rgba(255, 159, 178, 0.12)',
+                tension: 0.1,
+                borderWidth: 2.8,
+                pointRadius: 4,
+                pointHoverRadius: 6
             }
         ]
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             title: {
                 display: true,
