@@ -116,7 +116,7 @@ async function carregarDados() {
         // Reinicializa os dados
         dadosAlimentacao = {
             Marte: [],
-            Vênus: []
+            Venus: []
         };
 
         // Organiza os dados por gata (normalizando nomes)
@@ -182,7 +182,7 @@ function calcularMediasUltimaSemana() {
     const umaSemanaAtras = new Date(hoje);
     umaSemanaAtras.setDate(hoje.getDate() - 7);
 
-    for (const gata of ['Marte', 'Vênus']) {
+    for (const gata of ['Marte', 'Venus']) {
         const registrosUltimaSemana = dadosAlimentacao[gata].filter(registro => {
             const dataRegistro = new Date(registro.data.split('/').reverse().join('-'));
             return dataRegistro >= umaSemanaAtras && dataRegistro <= hoje;
@@ -220,7 +220,7 @@ function atualizarGrafico() {
     graficoCalorias.data.labels = datasOrdenadas;
     
     // Atualiza os dados para cada gata
-    ['Marte', 'Vênus'].forEach((gata, index) => {
+    ['Marte', 'Venus'].forEach((gata, index) => {
         const dadosGramas = datasOrdenadas.map(data => {
             const registro = dadosAlimentacao[gata].find(r => r.data === data);
             return registro ? registro.quantidade : null;
