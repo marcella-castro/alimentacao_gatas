@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Alimentação - Marte e Vênus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Diário de Alimentação</h1>
+        
+        <div id="mensagem" class="mensagem"></div>
+        
+        <form id="alimentacaoForm">
+            <div class="form-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gata">Gata:</label>
+                    <select id="gata" required>
+                        <option value="Marte">Marte</option>
+                        <option value="Vênus">Vênus</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="racao">Ração:</label>
+                    <select id="racao" required>
+                        <option value="Quatree Life" data-kcal="3960">Quatree Life (3.960 kcal/kg)</option>
+                        <option value="Granplus Filhote" data-kcal="4000">Granplus Filhote (4.000 kcal/kg)</option>
+                        <option value="Granplus Adulto" data-kcal="3950">Granplus Adulto (3.950 kcal/kg)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantidade">Quantidade (g):</label>
+                    <input type="number" id="quantidade" min="0" step="0.1" required>
+                </div>
+            </div>
+
+            <button type="submit">Registrar</button>
+        </form>
+
+        <div class="graficos-container">
+            <div class="chart-container">
+                <canvas id="graficoAlimentacao"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="graficoCalorias"></canvas>
+            </div>
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <h3>Marte - Última Semana</h3>
+                <p>Média diária: <span id="mediaGramasMarte">0</span>g</p>
+                <p>Média calórica: <span id="mediaCaloriasMarte">0</span> kcal</p>
+            </div>
+            <div class="card">
+                <h3>Vênus - Última Semana</h3>
+                <p>Média diária: <span id="mediaGramasVenus">0</span>g</p>
+                <p>Média calórica: <span id="mediaCaloriasVenus">0</span> kcal</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
