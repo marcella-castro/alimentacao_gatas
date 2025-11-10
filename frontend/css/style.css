@@ -76,7 +76,7 @@ input, select, textarea {
 
 /* Date inputs can include native controls; make sure they stay within bounds */
 input[type="date"] {
-    max-width: 100%;
+    max-width: 90%;
 }
 
 input:focus, select:focus {
