@@ -1,7 +1,12 @@
 // Dados de alimentação
+// Remove acentos para chave consistente (Marte, Venus)
+function normalizeNome(nome) {
+    return nome.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+}
+
 let dadosAlimentacao = {
     Marte: [],
-    Vênus: []
+    Venus: []
 };
 
 // Configuração do gráfico de gramas
@@ -105,7 +110,7 @@ const graficoCalorias = new Chart(ctxCalorias, {
 // Carrega dados do servidor
 async function carregarDados() {
     try {
-        const response = await fetch('http://localhost:3000/api/alimentacao');
+        const response = await fetch('/api/alimentacao');
         const dados = await response.json();
         
         // Reinicializa os dados
@@ -114,9 +119,11 @@ async function carregarDados() {
             Vênus: []
         };
 
-        // Organiza os dados por gata
+        // Organiza os dados por gata (normalizando nomes)
         dados.forEach(registro => {
-            dadosAlimentacao[registro.gata].push({
+            const chave = normalizeNome(registro.gata);
+            if (!dadosAlimentacao[chave]) dadosAlimentacao[chave] = [];
+            dadosAlimentacao[chave].push({
                 data: new Date(registro.data).toLocaleDateString('pt-BR'),
                 racao: registro.racao,
                 quantidade: registro.quantidade,
@@ -146,7 +153,7 @@ function mostrarMensagem(texto, tipo) {
 // Salva dados no servidor
 async function salvarDados(novoRegistro) {
     try {
-        const response = await fetch('http://localhost:3000/api/alimentacao', {
+        const response = await fetch('/api/alimentacao', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
