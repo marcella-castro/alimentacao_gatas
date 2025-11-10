@@ -176,15 +176,9 @@ function calcularMediasUltimaSemana() {
     umaSemanaAtras.setDate(hoje.getDate() - 7);
 
     for (const gata of ['Marte', 'Vênus']) {
-        console.log(`Calculando média para ${gata}`);
-        console.log('Registros disponíveis:', dadosAlimentacao[gata]);
-        
         const registrosUltimaSemana = dadosAlimentacao[gata].filter(registro => {
-            const partes = registro.data.split('/');
-            const dataRegistro = new Date(partes[2], partes[1] - 1, partes[0]);
-            const resultado = dataRegistro >= umaSemanaAtras && dataRegistro <= hoje;
-            console.log('Data registro:', dataRegistro, 'Está na última semana:', resultado);
-            return resultado;
+            const dataRegistro = new Date(registro.data.split('/').reverse().join('-'));
+            return dataRegistro >= umaSemanaAtras && dataRegistro <= hoje;
         });
 
         const mediaGramas = registrosUltimaSemana.length > 0
@@ -195,9 +189,8 @@ function calcularMediasUltimaSemana() {
             ? registrosUltimaSemana.reduce((sum, registro) => sum + registro.kcalTotal, 0) / registrosUltimaSemana.length
             : 0;
 
-        const gataSemAcento = gata === 'Vênus' ? 'Venus' : gata;
-        document.getElementById(`mediaGramas${gataSemAcento}`).textContent = mediaGramas.toFixed(1);
-        document.getElementById(`mediaCalorias${gataSemAcento}`).textContent = mediaCalorias.toFixed(1);
+        document.getElementById(`mediaGramas${gata}`).textContent = mediaGramas.toFixed(1);
+        document.getElementById(`mediaCalorias${gata}`).textContent = mediaCalorias.toFixed(1);
     }
 }
 
@@ -212,14 +205,8 @@ function atualizarGrafico() {
         });
     }
 
-    // Converte para array e ordena cronologicamente
-    const datasOrdenadas = Array.from(todasDatas)
-        .map(data => {
-            const partes = data.split('/');
-            return new Date(partes[2], partes[1] - 1, partes[0]);
-        })
-        .sort((a, b) => a - b)
-        .map(data => data.toLocaleDateString('pt-BR'));
+    // Converte para array e ordena
+    const datasOrdenadas = Array.from(todasDatas).sort();
 
     // Atualiza os dados dos gráficos
     graficoGramas.data.labels = datasOrdenadas;
