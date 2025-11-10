@@ -47,6 +47,11 @@ h1 {
     margin-bottom: 0;
 }
 
+/* Allow flex children to shrink properly and prevent overflow on small screens */
+.form-row .form-group {
+    min-width: 0;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
@@ -61,6 +66,17 @@ input, select {
     border-radius: 4px;
     box-sizing: border-box;
     color: var(--cor-texto);
+}
+
+/* Ensure inputs never exceed their container width (fixes date input overflow on mobile) */
+input, select, textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Date inputs can include native controls; make sure they stay within bounds */
+input[type="date"] {
+    max-width: 100%;
 }
 
 input:focus, select:focus {
