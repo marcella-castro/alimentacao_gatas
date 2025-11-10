@@ -12,12 +12,13 @@ app.use(express.json());
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Conectar ao SQLite
-const db = new sqlite3.Database('alimentacao.db', (err) => {
+// Conectar ao SQLite (usar caminho absoluto relativo ao projeto)
+const dbPath = path.join(__dirname, '..', 'alimentacao.db');
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Erro ao conectar ao banco de dados:', err);
   } else {
-    console.log('Conectado ao banco de dados SQLite');
+    console.log('Conectado ao banco de dados SQLite:', dbPath);
     // Criar tabela se não existir
     db.run(`CREATE TABLE IF NOT EXISTS alimentacao (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
