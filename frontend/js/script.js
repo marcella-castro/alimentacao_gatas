@@ -226,8 +226,17 @@ function atualizarGrafico() {
         });
     }
 
-    // Converte para array e ordena
-    const datasOrdenadas = Array.from(todasDatas).sort();
+    // Converte para array e ordena cronologicamente (do mais antigo para o mais recente)
+    const datasArray = Array.from(todasDatas);
+    // cada data está no formato 'DD/MM/YYYY' (como definido ao popular os dados)
+    const datasOrdenadas = datasArray
+        .map(label => {
+            const [dia, mes, ano] = label.split('/');
+            const dateObj = new Date(`${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`);
+            return { label, dateObj };
+        })
+        .sort((a, b) => a.dateObj - b.dateObj)
+        .map(x => x.label);
 
     // Atualiza os dados dos gráficos
     graficoGramas.data.labels = datasOrdenadas;

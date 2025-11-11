@@ -137,6 +137,25 @@ button:hover {
     text-align: center;
 }
 
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.card-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: contain; 
+    padding: 6px; 
+    flex-shrink: 0;
+}
+
+.card-avatar.invisible {
+    visibility: hidden;
+}
+
 .card h3 {
     color: var(--cor-texto);
     margin-top: 0;
@@ -232,5 +251,39 @@ button:hover {
 
     .card p {
         font-size: 1rem;
+    }
+}
+
+/* On small screens, put avatar above the card info */
+@media (max-width: 480px) {
+    .card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .card {
+        text-align: center;
+    }
+
+    .card-avatar {
+        width: 88px;
+        height: 88px;
+        padding: 8px;
+    }
+
+    .card p {
+        text-align: center;
+    }
+}
+
+/* Smaller avatar on very small screens */
+@media (max-width: 380px) {
+    .card-avatar {
+        width: 72px;
+        height: 72px;
+    }
+    .card-header {
+        gap: 10px;
     }
 }

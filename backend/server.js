@@ -11,6 +11,8 @@ app.use(express.json());
 
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
+// Também expor a raiz do projeto para servir imagens que fiquem no root (ex.: "icon marte.png")
+app.use(express.static(path.join(__dirname, '..')));
 
 // Conectar ao SQLite (usar caminho absoluto relativo ao projeto)
 const dbPath = path.join(__dirname, '..', 'alimentacao.db');
@@ -39,6 +41,17 @@ app.get('/api/alimentacao', (req, res) => {
       return;
     }
     res.json(rows);
+  });
+});
+
+// Endpoint para download do arquivo SQLite (alimentacao.db)
+app.get('/api/download-db', (req, res) => {
+  const dbFile = dbPath; // definido acima
+  res.download(dbFile, 'alimentacao.db', (err) => {
+    if (err) {
+      console.error('Erro ao enviar DB para download:', err);
+      if (!res.headersSent) res.status(500).json({ message: 'Erro ao disponibilizar o arquivo de banco de dados' });
+    }
   });
 });
 
