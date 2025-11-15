@@ -28,13 +28,29 @@
                         <option value="Vênus">Vênus</option>
                     </select>
                 </div>
-
                 <div class="form-group">
+                    <label for="tipoAlimento">Tipo de alimento:</label>
+                    <select id="tipoAlimento" required>
+                        <option value="seca">Seca</option>
+                        <option value="molhada">Molhada</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="secaGroup">
                     <label for="racao">Ração:</label>
                     <select id="racao" required>
                         <option value="Quatree Life" data-kcal="3960">Quatree Life (3.960 kcal/kg)</option>
                         <option value="Granplus Filhote" data-kcal="4000">Granplus Filhote (4.000 kcal/kg)</option>
                         <option value="Granplus Adulto" data-kcal="3950">Granplus Adulto (3.950 kcal/kg)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="molhadaGroup" style="display:none;">
+                    <label for="racaoMolhada">Ração molhada:</label>
+                    <select id="racaoMolhada">
+                        <option value="Sachê GranPlus" data-kcal-per-100="85">Sachê GranPlus (85 kcal/100g)</option>
+                        <option value="Sachê Whiskas" data-kcal-per-100="90">Sachê Whiskas (90 kcal/100g)</option>
+                        <option value="Ração Úmida Pet Delícia" data-kcal-per-100="300">Ração Úmida Pet Delícia (300 kcal/100g)</option> 
                     </select>
                 </div>
 
@@ -49,10 +65,7 @@
 
         <div class="graficos-container">
             <div class="chart-container">
-                <canvas id="graficoAlimentacao"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="graficoCalorias"></canvas>
+                <canvas id="graficoCombinado"></canvas>
             </div>
         </div>
 
@@ -62,16 +75,18 @@
                     <img src="assets/icon_marte.png" alt="Marte" class="card-avatar">
                     <h3>Marte - Última Semana</h3>
                 </div>
-                <p>Média diária: <span id="mediaGramasMarte">0</span>g</p>
-                <p>Média calórica: <span id="mediaCaloriasMarte">0</span> kcal</p>
+                <p>Média semanal (7d): <span id="mediaGramasMarte">0</span>g — <span id="mediaCaloriasMarte">0</span> kcal</p>
+                <p>Média mensal (30d): <span id="mediaMensalGramasMarte">0</span>g — <span id="mediaMensalCaloriasMarte">0</span> kcal</p>
+                <p>Média últimos 3 meses (90d): <span id="media3mesesGramasMarte">0</span>g — <span id="media3mesesCaloriasMarte">0</span> kcal</p>
             </div>
             <div class="card">
                 <div class="card-header">
                     <img src="assets/icon_venus.png" alt="Vênus" class="card-avatar">
                     <h3>Vênus - Última Semana</h3>
                 </div>
-                <p>Média diária: <span id="mediaGramasVenus">0</span>g</p>
-                <p>Média calórica: <span id="mediaCaloriasVenus">0</span> kcal</p>
+                <p>Média semanal (7d): <span id="mediaGramasVenus">0</span>g — <span id="mediaCaloriasVenus">0</span> kcal</p>
+                <p>Média mensal (30d): <span id="mediaMensalGramasVenus">0</span>g — <span id="mediaMensalCaloriasVenus">0</span> kcal</p>
+                <p>Média últimos 3 meses (90d): <span id="media3mesesGramasVenus">0</span>g — <span id="media3mesesCaloriasVenus">0</span> kcal</p>
             </div>
         </div>
     </div>

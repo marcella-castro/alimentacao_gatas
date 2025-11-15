@@ -28,8 +28,22 @@ const db = new sqlite3.Database(dbPath, (err) => {
       data TEXT NOT NULL,
       racao TEXT NOT NULL,
       quantidade REAL NOT NULL,
-      kcalTotal REAL NOT NULL
+      kcalTotal REAL NOT NULL,
+      tipo TEXT DEFAULT 'seca',
+      molhadaTipo TEXT
     )`);
+
+    // Garantir colunas antigas em DBs existentes: adicionar se faltar
+    db.all("PRAGMA table_info('alimentacao')", [], (err, cols) => {
+      if (err) return console.error('Erro PRAGMA:', err);
+      const names = cols.map(c => c.name);
+      if (!names.includes('tipo')) {
+        db.run("ALTER TABLE alimentacao ADD COLUMN tipo TEXT DEFAULT 'seca'");
+      }
+      if (!names.includes('molhadaTipo')) {
+        db.run("ALTER TABLE alimentacao ADD COLUMN molhadaTipo TEXT");
+      }
+    });
   }
 });
 
@@ -56,10 +70,38 @@ app.get('/api/download-db', (req, res) => {
 });
 
 app.post('/api/alimentacao', (req, res) => {
-  const { gata, data, racao, quantidade, kcalTotal } = req.body;
+  let { gata, data, racao, quantidade, kcalTotal, tipo, molhadaTipo } = req.body;
+
+  // Normalizações e parsing
+  quantidade = Number(quantidade) || 0;
+  tipo = tipo || 'seca';
+  molhadaTipo = molhadaTipo || null;
+
+  // Mapeamentos de calorias conhecidos
+  const secaKcalPerKg = {
+    'Quatree Life': 3960,
+    'Granplus Filhote': 4000,
+    'Granplus Adulto': 3950
+  };
+
+  const molhadaKcalPer100 = {
+    'Sachê Whiskas': 90,
+    'Sachê GranPlus': 85,
+    'Ração Úmida Pet Delícia': 300
+  };
+
+  // Sempre calcular kcalTotal no servidor a partir de tipo e ração fornecidos
+  if (tipo === 'molhada') {
+    const per100 = molhadaKcalPer100[molhadaTipo] || 0;
+    kcalTotal = (quantidade / 100.0) * per100;
+  } else {
+    const perKg = secaKcalPerKg[racao] || 0;
+    kcalTotal = (quantidade / 1000.0) * perKg;
+  }
+
   db.run(
-    'INSERT INTO alimentacao (gata, data, racao, quantidade, kcalTotal) VALUES (?, ?, ?, ?, ?)',
-    [gata, data, racao, quantidade, kcalTotal],
+    'INSERT INTO alimentacao (gata, data, racao, quantidade, kcalTotal, tipo, molhadaTipo) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [gata, data, racao, quantidade, kcalTotal, tipo, molhadaTipo],
     function(err) {
       if (err) {
         res.status(400).json({ message: err.message });
@@ -71,7 +113,9 @@ app.post('/api/alimentacao', (req, res) => {
         data,
         racao,
         quantidade,
-        kcalTotal
+        kcalTotal,
+        tipo,
+        molhadaTipo
       });
     }
   );
